@@ -1,0 +1,12 @@
+.board {
+  align-items: center;
+  border: 1px solid #000;
+  display: inline-flex;
+  flex-direction: column;
+  padding: 0.1rem;
+
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+}

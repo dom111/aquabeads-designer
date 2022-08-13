@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/components/Board.scss", "../src/components/Cell.scss"],
+  "sourcesContent": [null, null],
+  "mappings": "AAAA,OACE,mBACA,sBACA,oBACA,sBAJF,cAOE,YACE,aACA,mBCTJ,MACE,sBDDF,kBCGE,cDHF,gBCKE",
+  "names": []
+}

@@ -1,0 +1,29 @@
+{
+  "name": "wordle-kids",
+  "version": "0.0.1",
+  "description": "A Wordle clone for kids with three-letter words",
+  "scripts": {
+    "build": "npm run build:esbuild && npm run build:prettier:write",
+    "build:esbuild": "node ./esbuild.js",
+    "build:esbuild:watch": "node ./esbuild.js watch",
+    "build:prettier:check": "prettier -c .",
+    "build:prettier:write": "prettier -w .",
+    "build:watch": "npm run build:esbuild:watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "npm run build:watch"
+  },
+  "keywords": [
+    "wordle",
+    "kids"
+  ],
+  "author": "dom111 <dom111@users.noreply.github.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.15.0",
+    "esbuild-sass-plugin": "^2.3.1",
+    "prettier": "^2.7.1"
+  },
+  "dependencies": {
+    "css-what": "^6.1.0"
+  }
+}
