@@ -1,7 +1,7 @@
 {
-  "name": "wordle-kids",
+  "name": "aquabeads-designer",
   "version": "0.0.1",
-  "description": "A Wordle clone for kids with three-letter words",
+  "description": "An (unofficial) web-based designer for aquabeads",
   "scripts": {
     "build": "npm run build:esbuild && npm run build:prettier:write",
     "build:esbuild": "node ./esbuild.js",

@@ -26,6 +26,8 @@ export class Board extends Element {
         }
 
         if (event instanceof TouchEvent) {
+          event.preventDefault();
+
           [...event.touches].forEach((touch) => {
             // This was way more complicated than I expected, the touchmove event isn't triggered for other elements
             //  it passes over, so it's necessary to get the element from the event points to trigger the painting...
