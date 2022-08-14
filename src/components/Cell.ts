@@ -18,24 +18,19 @@ export class Cell extends Element {
   }
 
   private bindEvents(): void {
-    ['mousedown', 'mousemove', 'touchstart', 'touchmove'].forEach((eventName) =>
-      this.element().addEventListener(
-        eventName,
-        (event: MouseEvent | TouchEvent) => {
-          if (eventName === 'mousemove' && event.which !== 1) {
-            return;
-          }
-
-          event.preventDefault();
-
-          this.paint();
-        }
-      )
-    );
+    this.addEventListener('paint', () => this.paint());
   }
 
-  private paint(): void {
-    this.#colour = this.#picker.currentColour();
+  clear(): void {
+    this.paint('transparent');
+  }
+
+  private paint(colour?: string): void {
+    if (typeof colour === 'undefined') {
+      colour = this.#picker.currentColour();
+    }
+
+    this.#colour = colour;
     this.element().style.backgroundColor = this.#colour;
   }
 

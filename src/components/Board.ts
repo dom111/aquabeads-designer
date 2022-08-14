@@ -11,8 +11,43 @@ export class Board extends Element {
     this.#cells = this.generateCells(rows, cols, picker);
 
     this.#cells.forEach((row) =>
-      this.element().append(h('div.row', ...row.map((cell) => cell.element())))
+      this.append(h('div.row', ...row.map((cell) => cell.element())))
     );
+
+    this.bindEvents();
+  }
+
+  private bindEvents(): void {
+    ['mousedown', 'mousemove', 'touchstart', 'touchmove'].forEach((eventName) =>
+      this.addEventListener(eventName, (event: MouseEvent | TouchEvent) => {
+        // Only support left click, ignore anything else
+        if (event instanceof MouseEvent && (event.buttons & 1) === 0) {
+          return;
+        }
+
+        if (event instanceof TouchEvent) {
+          [...event.touches].forEach((touch) => {
+            // This was way more complicated than I expected, the touchmove event isn't triggered for other elements
+            //  it passes over, so it's necessary to get the element from the event points to trigger the painting...
+            const cell = document.elementFromPoint(touch.pageX, touch.pageY);
+
+            if (!cell.matches('.cell') || cell === this.element()) {
+              return;
+            }
+
+            cell.dispatchEvent(new CustomEvent('paint'));
+          });
+
+          return;
+        }
+
+        event.target.dispatchEvent(new CustomEvent('paint'));
+      })
+    );
+  }
+
+  clear(): void {
+    this.#cells.flat().forEach((cell: Cell) => cell.clear());
   }
 
   private generateCells(rows: number, cols: number, picker: Picker): Cell[][] {

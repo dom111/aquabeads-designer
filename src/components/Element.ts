@@ -1,5 +1,22 @@
 import { parse } from 'css-what';
 
+export const empty = (element: HTMLElement): void => {
+  while (element.hasChildNodes()) {
+    element.firstChild.remove();
+  }
+};
+
+export const addEventListeners = (
+  element: HTMLElement,
+  events: string[],
+  handler: (event: Event) => void,
+  options?: boolean | AddEventListenerOptions
+) => {
+  events.forEach((eventName) =>
+    element.addEventListener(eventName, handler, options)
+  );
+};
+
 export const h = (selector: string, ...childNodes: Node[]) => {
   const [element] = parse(selector).map((selectors) =>
     selectors.reduce((element: HTMLElement | null, details) => {
@@ -37,12 +54,32 @@ export class Element {
     this.#element = h(selector, ...childNodes);
   }
 
+  addEventListener(
+    event: string,
+    handler: (event: Event) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void {
+    this.element().addEventListener(event, handler, options);
+  }
+
+  addEventListeners(
+    events: string[],
+    handler: (event: Event) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void {
+    addEventListeners(this.element(), events, handler, options);
+  }
+
+  append(...nodes: Node[]): void {
+    return this.element().append(...nodes);
+  }
+
   element(): HTMLElement {
     return this.#element;
   }
 
   empty(): void {
-    this.element().childNodes.forEach((childNode) => childNode.remove());
+    empty(this.element());
   }
 }
 

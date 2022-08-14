@@ -1,7 +1,7 @@
 {
   "version": 3,
-  "sources": ["../src/components/Board.scss", "../src/components/Cell.scss"],
-  "sourcesContent": [null, null],
-  "mappings": "AAAA,OACE,mBACA,sBACA,oBACA,sBAJF,cAOE,YACE,aACA,mBCTJ,MACE,sBDDF,kBCGE,cDHF,gBCKE",
+  "sources": ["../src/components/Actions.scss", "../src/components/Board.scss", "../src/components/Cell.scss", "../src/components/Picker.scss"],
+  "sourcesContent": [null, null, null, null],
+  "mappings": "AAAA,gBACE,aAEA,uBACE,eCJJ,OACE,mBACA,sBACA,oBACA,sBDJF,cCOE,YACE,aACA,mBCTJ,MACE,sBFDF,kBEGE,cFHF,gBEKE,aCJA,qBACE,YACA,WAIA,qCACE,gBACA,sBHTN,gBGWM,YACA",
   "names": []
 }

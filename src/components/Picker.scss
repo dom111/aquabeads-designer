@@ -1,0 +1,16 @@
+section.picker {
+  input {
+    height: 4rem;
+    width: 6rem;
+  }
+
+  section.recent {
+    button {
+      appearance: none;
+      border: 1px solid #000;
+      border-radius: 0;
+      height: 2rem;
+      width: 2rem;
+    }
+  }
+}

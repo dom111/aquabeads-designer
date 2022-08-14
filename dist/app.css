@@ -1,2 +1,2 @@
-.board{align-items:center;border:1px solid #000;display:inline-flex;flex-direction:column;padding:.1rem}.board .row{display:flex;flex-direction:row}.cell{border:1px solid #000;border-radius:50%;height:1.4rem;margin:0 .12rem;width:1.4rem}
+section.actions{display:flex}section.actions button{font-size:4rem}.board{align-items:center;border:1px solid #000;display:inline-flex;flex-direction:column;padding:.1rem}.board .row{display:flex;flex-direction:row}.cell{border:1px solid #000;border-radius:50%;height:1.4rem;margin:0 .12rem;width:1.4rem}section.picker input{height:4rem;width:6rem}section.picker section.recent button{appearance:none;border:1px solid #000;border-radius:0;height:2rem;width:2rem}
 /*# sourceMappingURL=app.css.map */
