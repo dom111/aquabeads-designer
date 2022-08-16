@@ -34,9 +34,9 @@ export class Picker extends Element {
         this.#recentColours.splice(existingIndex, 1);
       }
 
-      this.#recentColours.splice(0, TOTAL_RECENT_COLOURS);
-
       this.#recentColours.unshift(colour);
+
+      this.#recentColours.splice(TOTAL_RECENT_COLOURS);
 
       this.updateRecent();
     });
