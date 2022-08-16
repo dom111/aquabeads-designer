@@ -2,6 +2,8 @@
 
 An (unofficial) web-based designer for Aquabeads.
 
+Check it out at: https://dom111.github.io/aquabeads-designer/
+
 This site is not affiliated with Aquabeads® or EPOCH.
 
 Aquabeads® is a registered trademark of EPOCH.
