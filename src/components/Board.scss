@@ -4,9 +4,14 @@
   display: inline-flex;
   flex-direction: column;
   padding: 0.1rem;
+  user-select: none;
 
   .row {
     display: flex;
     flex-direction: row;
+  }
+
+  @media print {
+    margin: 0;
   }
 }

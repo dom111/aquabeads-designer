@@ -13,4 +13,8 @@ section.picker {
       width: 2rem;
     }
   }
+
+  @media print {
+    display: none;
+  }
 }

@@ -1,15 +1,27 @@
-import Element, { addEventListeners, h, t } from './Element';
+import Element, { onEach, h, t } from './Element';
 import Board from './Board';
+import State from './State';
 
 export class Actions extends Element {
-  constructor(board: Board) {
+  constructor(board: Board, state: State) {
     super('section.actions');
 
-    const clear = h('button.clear', t('♻'));
+    const clear = h('button.clear[title="Clear"]', t('♻'));
 
-    addEventListeners(clear, ['mousedown', 'touchstart'], () => board.clear());
+    onEach(clear, ['mousedown', 'touchstart'], () => {
+      board.clear();
+      window.location.hash = '';
+    });
 
-    this.append(clear);
+    const link = h('button.link[title="Generate link"]', t('🔗'));
+
+    onEach(
+      link,
+      ['mousedown', 'touchstart'],
+      () => (window.location.hash = '#' + state.toString())
+    );
+
+    this.append(clear, link);
   }
 }
 

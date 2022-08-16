@@ -1,31 +1,22 @@
-import Element, { addEventListeners, empty, h } from './Element';
+import Element, { onEach, empty, h, on } from './Element';
+import State from './State';
+
+const TOTAL_RECENT_COLOURS = 16;
 
 export class Picker extends Element {
   #input: HTMLInputElement;
   #recent: HTMLDivElement;
-  #recentColours: string[] = [
-    '#ffffff',
-    '#888888',
-    '#000000',
-    '#ff0000',
-    '#ff8800',
-    '#ffff88',
-    '#ffff00',
-    '#88ff00',
-    '#00ff88',
-    '#88ffff',
-    '#00ffff',
-    '#0088ff',
-    '#8800ff',
-    '#ff00ff',
-    '#ff0088',
-    '#ff88ff',
-  ];
+  #recentColours: string[];
 
-  constructor() {
+  constructor(state: State) {
     super('section.picker');
 
-    this.#input = h('input[type="color"][value="#000000"]') as HTMLInputElement;
+    this.#recentColours = state.palette();
+
+    this.#input = h('input[type="color"]') as HTMLInputElement;
+
+    this.#input.value = this.#recentColours[0];
+
     this.#recent = h('section.recent') as HTMLDivElement;
 
     this.append(this.#input, this.#recent);
@@ -35,12 +26,15 @@ export class Picker extends Element {
   }
 
   private bindEvents(): void {
-    this.#input.addEventListener('input', () => {
-      const colour = this.#input.value;
+    on(this.#input, 'input', () => {
+      const colour = this.#input.value,
+        existingIndex = this.#recentColours.indexOf(colour);
 
-      this.#recentColours = this.#recentColours
-        .filter((recentColour) => recentColour !== colour)
-        .slice(0, 15);
+      if (existingIndex > -1) {
+        this.#recentColours.splice(existingIndex, 1);
+      }
+
+      this.#recentColours.splice(0, TOTAL_RECENT_COLOURS);
 
       this.#recentColours.unshift(colour);
 
@@ -61,7 +55,7 @@ export class Picker extends Element {
 
         element.style.backgroundColor = colour;
 
-        addEventListeners(
+        onEach(
           element,
           ['mousedown', 'touchstart'],
           () => (this.#input.value = colour)

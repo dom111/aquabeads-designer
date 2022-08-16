@@ -1,12 +1,24 @@
 import './app.scss';
 
-import Board from './components/Board';
-import Picker from './components/Picker';
 import Actions from './components/Actions';
+import Board from './components/Board';
+import Footer from './components/Footer';
+import Picker from './components/Picker';
+import State from './components/State';
 
-const picker = new Picker(),
-  board = new Board(picker),
-  actions = new Actions(board),
-  appContainer = document.getElementById('app');
+const state = new State();
 
-appContainer.append(actions.element(), board.element(), picker.element());
+state.init(window.location).then(() => {
+  const picker = new Picker(state),
+    board = new Board(picker, state),
+    actions = new Actions(board, state),
+    footer = new Footer(),
+    appContainer = document.getElementById('app');
+
+  appContainer.append(
+    actions.element(),
+    board.element(),
+    picker.element(),
+    footer.element()
+  );
+});

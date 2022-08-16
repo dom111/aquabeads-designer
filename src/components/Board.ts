@@ -1,25 +1,29 @@
-import Cell from './Cell';
 import Element, { h } from './Element';
+import Cell from './Cell';
 import Picker from './Picker';
+import State from './State';
 
 export class Board extends Element {
   #cells: Cell[][];
 
-  constructor(picker: Picker, rows: number = 26, cols: number = 22) {
+  constructor(picker: Picker, state: State) {
     super('section.board');
 
-    this.#cells = this.generateCells(rows, cols, picker);
+    const { height, width } = state.board();
+
+    this.#cells = this.generateCells(height, width, picker, state);
 
     this.#cells.forEach((row) =>
-      this.append(h('div.row', ...row.map((cell) => cell.element())))
+      this.append(h('.row', ...row.map((cell) => cell.element())))
     );
 
     this.bindEvents();
   }
 
   private bindEvents(): void {
-    ['mousedown', 'mousemove', 'touchstart', 'touchmove'].forEach((eventName) =>
-      this.addEventListener(eventName, (event: MouseEvent | TouchEvent) => {
+    this.onEach(
+      ['mousedown', 'mousemove', 'touchstart', 'touchmove'],
+      (event: MouseEvent | TouchEvent) => {
         // Only support left click, ignore anything else
         if (event instanceof MouseEvent && (event.buttons & 1) === 0) {
           return;
@@ -33,7 +37,7 @@ export class Board extends Element {
             //  it passes over, so it's necessary to get the element from the event points to trigger the painting...
             const cell = document.elementFromPoint(touch.pageX, touch.pageY);
 
-            if (!cell.matches('.cell') || cell === this.element()) {
+            if (!cell.matches('.cell')) {
               return;
             }
 
@@ -44,7 +48,7 @@ export class Board extends Element {
         }
 
         event.target.dispatchEvent(new CustomEvent('paint'));
-      })
+      }
     );
   }
 
@@ -52,11 +56,18 @@ export class Board extends Element {
     this.#cells.flat().forEach((cell: Cell) => cell.clear());
   }
 
-  private generateCells(rows: number, cols: number, picker: Picker): Cell[][] {
+  private generateCells(
+    rows: number,
+    cols: number,
+    picker: Picker,
+    state: State
+  ): Cell[][] {
     return new Array(rows)
       .fill(0)
       .map((_, y) =>
-        new Array(cols - (y % 2)).fill(0).map((_, x) => new Cell(x, y, picker))
+        new Array(cols - (y % 2))
+          .fill(0)
+          .map((_, x) => new Cell(x, y, picker, state))
       );
   }
 }

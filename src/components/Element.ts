@@ -6,22 +6,42 @@ export const empty = (element: HTMLElement): void => {
   }
 };
 
-export const addEventListeners = (
-  element: HTMLElement,
-  events: string[],
-  handler: (event: Event) => void,
-  options?: boolean | AddEventListenerOptions
-) => {
-  events.forEach((eventName) =>
-    element.addEventListener(eventName, handler, options)
-  );
+export const on:
+  | (<K extends keyof GlobalEventHandlersEventMap>(
+      target: EventTarget,
+      event: K,
+      handler: (event: GlobalEventHandlersEventMap[K]) => void,
+      options?: boolean | AddEventListenerOptions
+    ) => any)
+  | ((
+      element: EventTarget,
+      type: string,
+      listener: EventListenerOrEventListenerObject,
+      options?: boolean | AddEventListenerOptions
+    ) => any) = (target, event, handler, options): void =>
+  target.addEventListener(event, handler, options);
+
+export const onEach:
+  | (<K extends keyof GlobalEventHandlersEventMap>(
+      target: EventTarget,
+      events: K[],
+      handler: (event: GlobalEventHandlersEventMap[K]) => void,
+      options?: boolean | AddEventListenerOptions
+    ) => any)
+  | ((
+      target: EventTarget,
+      type: string[],
+      listener: EventListenerOrEventListenerObject,
+      options?: boolean | AddEventListenerOptions
+    ) => any) = (target, events, handler, options): any => {
+  events.forEach((event) => on(target, event, handler, options));
 };
 
 export const h = (selector: string, ...childNodes: Node[]) => {
   const [element] = parse(selector).map((selectors) =>
     selectors.reduce((element: HTMLElement | null, details) => {
       if (element === null && details.type !== 'tag') {
-        throw new Error('Unexpected.');
+        element = document.createElement('div');
       }
 
       if (details.type === 'tag') {
@@ -45,7 +65,7 @@ export const h = (selector: string, ...childNodes: Node[]) => {
   return element;
 };
 
-export const t = (content: string) => document.createTextNode(content);
+export const t = (content: string): Text => document.createTextNode(content);
 
 export class Element {
   #element: HTMLElement;
@@ -54,20 +74,32 @@ export class Element {
     this.#element = h(selector, ...childNodes);
   }
 
-  addEventListener(
-    event: string,
-    handler: (event: Event) => void,
+  on<K extends keyof GlobalEventHandlersEventMap>(
+    event: K,
+    handler: (event: GlobalEventHandlersEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions
-  ): void {
-    this.element().addEventListener(event, handler, options);
+  ): void;
+  on(
+    type: string,
+    listener: EventListenerOrEventListenerObject,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  on(event, handler, options): void {
+    on(this.element(), event, handler, options);
   }
 
-  addEventListeners(
-    events: string[],
-    handler: (event: Event) => void,
+  onEach<K extends keyof GlobalEventHandlersEventMap>(
+    events: K[],
+    handler: (event: GlobalEventHandlersEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions
-  ): void {
-    addEventListeners(this.element(), events, handler, options);
+  ): void;
+  onEach(
+    type: string[],
+    listener: EventListenerOrEventListenerObject,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  onEach(events, handler, options): void {
+    onEach(this.element(), events, handler, options);
   }
 
   append(...nodes: Node[]): void {

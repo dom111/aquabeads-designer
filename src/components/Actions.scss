@@ -4,4 +4,8 @@ section.actions {
   button {
     font-size: 4rem;
   }
+
+  @media print {
+    display: none;
+  }
 }

@@ -1,4 +1,20 @@
 @import 'components/Actions';
 @import 'components/Board';
 @import 'components/Cell';
+@import 'components/Footer';
 @import 'components/Picker';
+
+body {
+  font-family: sans-serif;
+
+  @media print {
+    // Include background colours in printing (needed to display the coloured beads)
+    -webkit-print-color-adjust: exact !important;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    // This juuuust about matches the boards when printed
+    transform: scale(0.66);
+    width: 210mm;
+  }
+}

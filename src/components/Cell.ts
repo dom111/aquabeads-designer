@@ -1,24 +1,28 @@
 import Element from './Element';
 import Picker from './Picker';
+import State from './State';
 
 export class Cell extends Element {
   #colour: string = 'transparent';
   #picker: Picker;
+  #state: State;
   #x: number;
   #y: number;
 
-  constructor(x: number, y: number, picker: Picker) {
-    super('div.cell');
+  constructor(x: number, y: number, picker: Picker, state: State) {
+    super('.cell');
 
     this.#picker = picker;
+    this.#state = state;
     this.#x = x;
     this.#y = y;
 
     this.bindEvents();
+    this.paint(state.getEntry(x, y));
   }
 
   private bindEvents(): void {
-    this.addEventListener('paint', () => this.paint());
+    this.on('paint', () => this.paint());
   }
 
   clear(): void {
@@ -32,14 +36,10 @@ export class Cell extends Element {
 
     this.#colour = colour;
     this.element().style.backgroundColor = this.#colour;
-  }
 
-  x(): number {
-    return this.#x;
-  }
-
-  y(): number {
-    return this.#y;
+    if (this.#state.getEntry(this.#x, this.#y) !== colour) {
+      this.#state.setEntry(this.#x, this.#y, this.#colour);
+    }
   }
 }
 
