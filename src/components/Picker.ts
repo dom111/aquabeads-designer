@@ -1,5 +1,5 @@
 import Element, { onEach, empty, h, on } from './Element';
-import State from './State';
+import State from '../State';
 
 const TOTAL_RECENT_COLOURS = 16;
 

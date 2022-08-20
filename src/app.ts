@@ -4,11 +4,11 @@ import Actions from './components/Actions';
 import Board from './components/Board';
 import Footer from './components/Footer';
 import Picker from './components/Picker';
-import State from './components/State';
+import State from './State';
 
 const state = new State();
 
-state.init(window.location).then(() => {
+state.init(window.location.hash.slice(1)).then(() => {
   const picker = new Picker(state),
     board = new Board(picker, state),
     actions = new Actions(board, state),
@@ -22,3 +22,6 @@ state.init(window.location).then(() => {
     footer.element()
   );
 });
+
+// This sucks, but it works for now - if I need this much reactivity, I should move to a proper framework.
+window.addEventListener('hashchange', () => window.location.reload());

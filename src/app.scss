@@ -14,7 +14,7 @@ body {
     margin: 0;
     padding: 0;
     // This juuuust about matches the boards when printed
-    transform: scale(0.66);
+    transform: scale(0.7);
     width: 210mm;
   }
 }
@@ -34,6 +34,10 @@ body {
     @media (max-width: 500px) {
       animation: none;
     }
+  }
+
+  @media print {
+    display: none;
   }
 }
 

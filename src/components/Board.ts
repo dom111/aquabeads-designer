@@ -1,7 +1,7 @@
 import Element, { h } from './Element';
 import Cell from './Cell';
 import Picker from './Picker';
-import State from './State';
+import State from '../State';
 
 export class Board extends Element {
   #cells: Cell[][];

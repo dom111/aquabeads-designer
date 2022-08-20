@@ -1,6 +1,6 @@
 import Element from './Element';
 import Picker from './Picker';
-import State from './State';
+import State from '../State';
 
 export class Cell extends Element {
   #colour: string = 'transparent';

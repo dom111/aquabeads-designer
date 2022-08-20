@@ -1,8 +1,11 @@
 section.actions {
   display: flex;
+  margin: 0 0 1rem;
 
   button {
+    display: flex;
     font-size: 4rem;
+    width: 95px;
   }
 
   @media print {
