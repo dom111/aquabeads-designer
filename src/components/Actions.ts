@@ -32,7 +32,7 @@ export class Actions extends Element {
       navigator.share({
         text: 'Check out my Aquabeads® design!',
         title: 'Aquabeads® Designer',
-        url: await state.toString(),
+        url: '#' + (await state.toString()),
       })
     );
 
