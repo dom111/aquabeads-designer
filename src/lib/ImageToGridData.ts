@@ -87,22 +87,9 @@ export class ImageToGridData extends Element {
           squareSize
         );
 
-        const debugContainer =
-          document.querySelector('.debug-container') ??
-          (() => {
-            const debugContainer = document.createElement('div');
-
-            debugContainer.classList.add('debug-container');
-
-            document.body.append(debugContainer);
-
-            return debugContainer;
-          })();
-
         const squareImage = new Image();
 
         squareImage.src = squareCanvas.toDataURL('image/png');
-        debugContainer.append(squareImage);
 
         const colour = colourSampler(
           squareContext.getImageData(0, 0, squareSize, squareSize)
