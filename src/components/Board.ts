@@ -82,6 +82,10 @@ export class Board extends Element {
 
       event.preventDefault();
 
+      if (!this.#currentTarget) {
+        this.#currentTarget = this.element().querySelector('.cell');
+      }
+
       const currentRow = this.#currentTarget.parentElement,
         currentRowIndex = [...currentRow.childNodes].indexOf(
           this.#currentTarget
