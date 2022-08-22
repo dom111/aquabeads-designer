@@ -1,7 +1,7 @@
 {
   "version": 3,
-  "sources": ["../src/components/Actions.scss", "../src/components/Board.scss", "../src/components/Cell.scss", "../src/components/Footer.scss", "../src/components/Picker.scss", "../src/app.scss"],
-  "sourcesContent": [null, null, null, null, null, null],
-  "mappings": "AAAA,gBACE,aADF,gBAIE,uBACE,aACA,eACA,WAGF,aAVF,gBAWI,cCXJ,OACE,mBACA,sBACA,oBACA,sBDJF,cCME,iBAEA,YACE,aACA,mBAGF,aAbF,ODAA,UEAA,MACE,sBFDF,kBEGE,cFHF,gBEKE,aCLF,SACE,kBCAA,qBACE,YACA,WAIA,qCACE,gBACA,sBJTN,gBIWM,YACA,WAIJ,aAhBF,eAiBI,cCXJ,KACE,uBAEA,aAHF,KAKI,2CACA,SLZJ,mBKgBI,oBACA,aAOA,0BADF,yBAEI,yCAIJ,+BACE,wCACA,6BAEA,0BAJF,+BAKI,gBAIJ,aAhBF,eAiBI,cAIJ,8BAGI,4BAIA,iCAIA",
+  "sources": ["../src/components/Actions.scss", "../src/components/Actions/ImportImage.scss", "../src/components/Board.scss", "../src/components/Cell.scss", "../src/components/Footer.scss", "../src/components/Picker.scss", "../src/app.scss"],
+  "sourcesContent": [null, null, null, null, null, null, null],
+  "mappings": "AAAA,gBACE,aADF,gBAIE,uBACE,aACA,eACA,WAGF,aAVF,gBAWI,cCXJ,0BACE,kBAEA,2CDHF,QCMI,kBACA,kBAGA,WCVJ,OACE,mBACA,sBACA,oBACA,sBFJF,cEME,iBAEA,YACE,aACA,mBAGF,aAbF,OFAA,UGAA,MACE,sBHDF,kBGGE,6nCAGA,cHNF,gBGQE,aAEA,YACE,kBACA,0BAGF,YACE,o8BChBJ,SACE,kBCAA,qBACE,YACA,WAIA,qCACE,gBACA,sBLTN,gBKWM,YACA,WAIJ,aAhBF,eAiBI,cCXJ,KACE,uBAEA,aAHF,KAKI,2CACA,SNZJ,mBMgBI,qBACA,aAOA,0BADF,yBAEI,yCAIJ,+BACE,wCACA,6BAEA,0BAJF,+BAKI,gBAIJ,aAhBF,eAiBI,cAIJ,8BAGI,4BAIA,iCAIA",
   "names": []
 }

@@ -1,5 +1,5 @@
-import Base64 from './lib/Base64';
-import Compression from './lib/Compression';
+import Base64 from './Base64';
+import Compression from './Compression';
 
 type BoardState = { height: number; width: number };
 type StateMap = {
@@ -14,7 +14,7 @@ const defaultState = (height: number = 26, width: number = 22): StateMap => ({
     height,
     width,
   },
-  entries: new Array(26 * 22 - Math.floor(height / 2)).fill(0),
+  entries: new Array(height * width - Math.floor(height / 2)).fill(0),
   lookup: ['transparent'],
   palette: [
     '#ff0000',
@@ -99,12 +99,12 @@ export class State {
       this.#state.lookup.indexOf(colour);
   }
 
-  async toString(): Promise<string> {
+  async toString(state = this.#state): Promise<string> {
     if (!Compression.isAvailable()) {
-      return btoa(JSON.stringify(this.#state));
+      return btoa(JSON.stringify(state));
     }
 
-    return Compression.compress(JSON.stringify(this.#state)).then((data) =>
+    return Compression.compress(JSON.stringify(state)).then((data) =>
       Base64.encode(data)
     );
   }

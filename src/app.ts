@@ -4,7 +4,7 @@ import Actions from './components/Actions';
 import Board from './components/Board';
 import Footer from './components/Footer';
 import Picker from './components/Picker';
-import State from './State';
+import State from './lib/State';
 
 const state = new State();
 

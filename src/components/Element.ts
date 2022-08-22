@@ -6,6 +6,43 @@ export const empty = (element: HTMLElement): void => {
   }
 };
 
+export const h = <T extends HTMLElement = HTMLElement>(
+  selector: string,
+  ...childNodes: (Node | Element)[]
+): T => {
+  const [element] = parse(selector).map((selectors) =>
+    selectors.reduce((element: HTMLElement | null, details) => {
+      if (element === null && details.type !== 'tag') {
+        element = document.createElement('div');
+      }
+
+      if (details.type === 'tag') {
+        return document.createElement(details.name);
+      }
+
+      if (details.type === 'attribute' && details.name !== 'class') {
+        element.setAttribute(details.name, details.value ?? '');
+      }
+
+      if (details.type === 'attribute' && details.name === 'class') {
+        element.classList.add(details.value);
+      }
+
+      return element;
+    }, null)
+  );
+
+  childNodes.forEach((childNode) => {
+    if (childNode instanceof Element) {
+      childNode = childNode.element();
+    }
+
+    element.append(childNode);
+  });
+
+  return element as T;
+};
+
 export const on:
   | (<K extends keyof GlobalEventHandlersEventMap>(
       target: EventTarget,
@@ -37,34 +74,6 @@ export const onEach:
   events.forEach((event) => on(target, event, handler, options));
 };
 
-export const h = (selector: string, ...childNodes: Node[]) => {
-  const [element] = parse(selector).map((selectors) =>
-    selectors.reduce((element: HTMLElement | null, details) => {
-      if (element === null && details.type !== 'tag') {
-        element = document.createElement('div');
-      }
-
-      if (details.type === 'tag') {
-        return document.createElement(details.name);
-      }
-
-      if (details.type === 'attribute' && details.name !== 'class') {
-        element.setAttribute(details.name, details.value ?? '');
-      }
-
-      if (details.type === 'attribute' && details.name === 'class') {
-        element.classList.add(details.value);
-      }
-
-      return element;
-    }, null)
-  );
-
-  childNodes.forEach((childNode) => element.append(childNode));
-
-  return element;
-};
-
 export const t = (content: string): Text => document.createTextNode(content);
 
 export class Element {
@@ -72,6 +81,28 @@ export class Element {
 
   constructor(selector: string, ...childNodes: Node[]) {
     this.#element = h(selector, ...childNodes);
+  }
+
+  addClass(...classes: string[]): void {
+    this.element().classList.add(...classes);
+  }
+
+  append(...nodes: (Node | Element)[]): void {
+    nodes.forEach((node) => {
+      if (node instanceof Element) {
+        node = node.element();
+      }
+
+      this.element().append(node);
+    });
+  }
+
+  element(): HTMLElement {
+    return this.#element;
+  }
+
+  empty(): void {
+    empty(this.element());
   }
 
   on<K extends keyof GlobalEventHandlersEventMap>(
@@ -102,16 +133,8 @@ export class Element {
     onEach(this.element(), events, handler, options);
   }
 
-  append(...nodes: Node[]): void {
-    return this.element().append(...nodes);
-  }
-
-  element(): HTMLElement {
-    return this.#element;
-  }
-
-  empty(): void {
-    empty(this.element());
+  removeClass(...classes: string[]): void {
+    this.element().classList.remove(...classes);
   }
 }
 

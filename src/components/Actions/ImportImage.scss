@@ -1,0 +1,13 @@
+span.import-image-wrapper {
+  position: relative;
+
+  input[type='file'] {
+    bottom: 0;
+    left: 0;
+    padding-left: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+  }
+}

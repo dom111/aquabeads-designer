@@ -1,7 +1,7 @@
 import Element, { onEach, empty, h, on } from './Element';
-import State from '../State';
+import State from '../lib/State';
 
-const TOTAL_RECENT_COLOURS = 16;
+export const TOTAL_RECENT_COLOURS = 16;
 
 export class Picker extends Element {
   #input: HTMLInputElement;
@@ -26,24 +26,29 @@ export class Picker extends Element {
   }
 
   private bindEvents(): void {
-    on(this.#input, 'input', () => {
-      const colour = this.#input.value,
-        existingIndex = this.#recentColours.indexOf(colour);
-
-      if (existingIndex > -1) {
-        this.#recentColours.splice(existingIndex, 1);
-      }
-
-      this.#recentColours.unshift(colour);
-
-      this.#recentColours.splice(TOTAL_RECENT_COLOURS);
-
-      this.updateRecent();
-    });
+    on(this.#input, 'input', () => this.setCurrentColour(this.#input.value));
   }
 
   currentColour(): string {
     return this.#input.value;
+  }
+
+  setCurrentColour(colour: string): void {
+    if (this.#input.value !== colour) {
+      this.#input.value = colour;
+    }
+
+    const existingIndex = this.#recentColours.indexOf(colour);
+
+    if (existingIndex > -1) {
+      this.#recentColours.splice(existingIndex, 1);
+    }
+
+    this.#recentColours.unshift(colour);
+
+    this.#recentColours.splice(TOTAL_RECENT_COLOURS);
+
+    this.updateRecent();
   }
 
   updateRecent(): void {
